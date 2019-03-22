@@ -8,14 +8,23 @@ namespace SnakeGame
 {
     class Program
     {
+        // A variable which determines game status.
+        static public bool isGameRunning = true;
+    
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            // Declaring instances of classes we are going to use.
+            var Field = new PlayingField();            
+            var Snake = new Snake();
+            var Food = new Food();
+           
+            Field.FieldBuilder();
+            Snake.DrawSnake();
+            Food.FoodSetter();
+            Snake.Game();
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+            Console.ReadKey();
         }
+        
     }
 }
