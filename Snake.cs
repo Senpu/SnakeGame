@@ -68,7 +68,7 @@ namespace SnakeGame
                     Program.isGameRunning = false;
                     Console.SetCursorPosition(15, 9);
                     Console.WriteLine("Game Over!");
-                    Console.SetCursorPosition(13, 10);
+                    Console.SetCursorPosition(12, 10);
                     Console.WriteLine($"Your score is: {Food.score}");
                 }     
 
