@@ -120,8 +120,8 @@ namespace SnakeGame
                     Console.WriteLine("Game Over!");
                     Console.SetCursorPosition(14, 11);
                     Console.WriteLine($"Your score is: {food.score}");
-                    Console.SetCursorPosition(14, 12);
-                    Console.WriteLine("Press Esc to exit.");
+                    Console.SetCursorPosition(12, 12);
+                    Console.WriteLine("Press any key to exit.");
                 }
 
                 // This statement allows developer to control the game speed.
