@@ -9,20 +9,62 @@ namespace SnakeGame
 {
     class Snake
     {
-        public static int coordinateX = 21;
-        public static int coordinateY = 11;
-        decimal gameSpeed = 150m;
+        public static int[] coordinateX = new int[50];
+        public static int[] coordinateY = new int[50];       
+
+        static Snake()
+        {
+            coordinateX[0] = 21;
+            coordinateY[0] = 11;
+        }
+        
+        // Using decimal in order to operate game's speed properly.
+
+        public static decimal gameSpeed = 200m;
 
         bool isBorderHit = false;
-
-        Food Food = new Food();
+        
+        Food food = new Food();
 
         // This method prints a character in a middle of a field when the game starts.
-        public void DrawSnake()
+        public void DrawSnakeOnce()
         {
-            Console.SetCursorPosition(coordinateX, coordinateY);
-            Console.Write('o');
+            Console.SetCursorPosition(Snake.coordinateX[0], Snake.coordinateY[0]);
+            Console.Write('\u0398');
         }
+
+        
+        public void DrawSnake(int foodEaten, int[] coordinateXIn, int[] coordinateYIn, out int[] coordinateXOut, out int[] coordinateYOut)
+        {
+            // Drawing the head of the snake.
+            Console.SetCursorPosition(coordinateXIn[0], coordinateYIn[0]);
+            Console.Write('\u0398');
+
+            // Drawing the body of the snake. 
+            for (int i = 1; i < foodEaten + 1; i++)
+            {
+                Console.SetCursorPosition(coordinateXIn[i], coordinateYIn[i]);
+                Console.Write('o');
+            }
+
+            // Erasing the last part of the snake.
+            Console.SetCursorPosition(coordinateXIn[foodEaten + 1], coordinateYIn[foodEaten + 1]);
+            Console.Write(' ');
+
+            // This loop is needed to move tail after the head properly.
+            for (int i = foodEaten + 1; i > 0; i--)
+            {
+                coordinateXIn[i] = coordinateXIn[i - 1];
+                coordinateYIn[i] = coordinateYIn[i - 1];
+            }
+
+            // Returning coordinates.
+            coordinateXOut = coordinateXIn;
+            coordinateYOut = coordinateYIn;
+        }
+
+        
+
        
         // This method defines general game loop and control handling.
         public void Game()
@@ -34,46 +76,53 @@ namespace SnakeGame
                 switch (moveKey)
                 {
                     case ConsoleKey.UpArrow:
-                        Console.SetCursorPosition(coordinateX, coordinateY);
+                        Console.SetCursorPosition(coordinateX[0], coordinateY[0]);
                         Console.Write(" ");
-                        coordinateY--;
+                        coordinateY[0]--;
                         break;
 
                     case ConsoleKey.DownArrow:
-                        Console.SetCursorPosition(coordinateX, coordinateY);
+                        Console.SetCursorPosition(coordinateX[0], coordinateY[0]);
                         Console.Write(" ");
-                        coordinateY++;
+                        coordinateY[0]++;
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        Console.SetCursorPosition(coordinateX, coordinateY);
+                        Console.SetCursorPosition(coordinateX[0], coordinateY[0]);
                         Console.Write(" ");
-                        coordinateX--;
+                        coordinateX[0]--;
                         break;
 
                     case ConsoleKey.RightArrow:
-                        Console.SetCursorPosition(coordinateX, coordinateY);
+                        Console.SetCursorPosition(coordinateX[0], coordinateY[0]);
                         Console.Write(" ");
-                        coordinateX++;
+                        coordinateX[0]++;
                         break;
                 }
 
-                DrawSnake();
-               
-                isBorderHit = BorderHit(coordinateX, coordinateY);
+                DrawSnake(food.score, coordinateX, coordinateY, out coordinateX, out coordinateY);
+
+                // This method setting and updating the food.
+                food.FoodUpdater();
+
+                // This statement checks if food was generated inside snake's body.
+                if (!(food.food == '@'))
+                    food.FoodUpdater();
+
+                isBorderHit = BorderHit(coordinateX[0], coordinateY[0]);
 
                 // And if yes, this statement stops the game with a message.
                 if (isBorderHit)
                 {
                     Program.isGameRunning = false;
-                    Console.SetCursorPosition(15, 9);
+                    Console.Clear();
+                    Console.SetCursorPosition(17, 10);
                     Console.WriteLine("Game Over!");
-                    Console.SetCursorPosition(12, 10);
-                    Console.WriteLine($"Your score is: {Food.score}");
-                }     
-
-                // This method setting the food on the field.
-                Food.FoodSetter();
+                    Console.SetCursorPosition(14, 11);
+                    Console.WriteLine($"Your score is: {food.score - 1}");
+                    Console.SetCursorPosition(14, 12);
+                    Console.WriteLine("Press Esc to exit.");
+                }
 
                 // This statement allows developer to control the game speed.
                 if (Console.KeyAvailable) moveKey = Console.ReadKey().Key;
@@ -87,7 +136,10 @@ namespace SnakeGame
         // This method tracks if border was hit.
         private bool BorderHit(int x, int y)
         {
-            if (x == 0 || x == 43 || y == 0 || y == 23) return true; return false;
+            if (x == 0 || x == 43 || y == 0 || y == 23)
+                return true;
+            else
+                return false;
         }
 
     }

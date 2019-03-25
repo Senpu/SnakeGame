@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 // This class defines the field of the game. 
 namespace SnakeGame
 {
-    class PlayingField
+    static class PlayingField
     {
         // Main building method.
-        public void FieldBuilder()
+        public static void FieldBuilder()
         {
             var width = 42;
             var height = 22;
 
-            //Console.SetWindowSize(width, height);
             Console.Clear();
-
-            // UTF8 encoding to display unicode properly.
-            Console.OutputEncoding = Encoding.UTF8;
 
             // +3 and +4 are needed because a window should be bigger than
             // a field in order to display borders properly.
@@ -53,5 +49,6 @@ namespace SnakeGame
             Console.Write(botBorder + " ");
 
         }
+
     }
 }

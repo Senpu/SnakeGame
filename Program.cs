@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// This class is enering point of the game.
 namespace SnakeGame
 {
     class Program
@@ -13,17 +14,18 @@ namespace SnakeGame
     
         static void Main(string[] args)
         {
-            // Declaring instances of classes we are going to use.
-            var Field = new PlayingField();            
-            var Snake = new Snake();
-            var Food = new Food();
-           
-            Field.FieldBuilder();
-            Snake.DrawSnake();
-            Food.FoodSetter();
-            Snake.Game();
+            // Setting Encoding to display all symbols properly.
+            Console.OutputEncoding = Encoding.UTF8;
 
-            Console.ReadKey();
+            // Declaring instances of classes we are going to use.           
+            var snake = new Snake();
+            var food = new Food();
+           
+            PlayingField.FieldBuilder();
+            food.FoodUpdater();
+            snake.DrawSnakeOnce();
+            snake.Game();
+            
         }
         
     }
