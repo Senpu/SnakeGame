@@ -11,7 +11,7 @@ namespace SnakeGame
     {
         public int foodX;
         public int foodY;
-        public int score = 0;
+        public int score = -1;
         public char food = '@';
 
         bool isFoodEaten = true;

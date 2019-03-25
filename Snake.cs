@@ -119,7 +119,7 @@ namespace SnakeGame
                     Console.SetCursorPosition(17, 10);
                     Console.WriteLine("Game Over!");
                     Console.SetCursorPosition(14, 11);
-                    Console.WriteLine($"Your score is: {food.score - 1}");
+                    Console.WriteLine($"Your score is: {food.score}");
                     Console.SetCursorPosition(14, 12);
                     Console.WriteLine("Press Esc to exit.");
                 }
