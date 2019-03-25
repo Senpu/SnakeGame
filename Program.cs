@@ -25,6 +25,8 @@ namespace SnakeGame
             food.FoodUpdater();
             snake.DrawSnakeOnce();
             snake.Game();
+
+            Console.ReadKey();
             
         }
         
